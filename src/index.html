@@ -7,13 +7,18 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <select class="breed-select js-select-hidden"></select>
-    <p class="loader js-loader-hidden">Loading data, please wait...</p>
-    <p class="error js-error-hidden">
-      Oops! Something went wrong! Try reloading the page!
-    </p>
-    <div class="cat-info"></div>
-
+    <form class="search-form" id="search-form">
+      <input
+        type="text"
+        name="searchQuery"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+      <button type="submit">Search</button>
+    </form>
+    <div class="gallery">
+      <!-- Картки зображень -->
+    </div>
     <script src="index.js" type="module"></script>
   </body>
 </html>
