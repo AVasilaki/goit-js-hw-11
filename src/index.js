@@ -1,4 +1,5 @@
 import { fetchImage } from './image_api';
+import Notiflix from 'notiflix';
 
 const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
@@ -9,7 +10,16 @@ function handlerSearch(evt) {
   const search = form.elements.searchQuery.value;
   console.log(search);
   fetchImage(search)
-    .then(hits => renderImages(hits))
+    .then(resp => {
+      if (resp.hits.length === 0) {
+        Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        // console.log(resp);
+      }
+
+      renderImages(resp);
+    })
     .catch(error => console.log(error));
 }
 function renderImages(arr) {
