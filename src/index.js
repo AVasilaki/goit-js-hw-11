@@ -3,6 +3,7 @@ import Notiflix from 'notiflix';
 
 const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
 
 form.addEventListener('submit', handlerSearch);
 function handlerSearch(evt) {
@@ -19,6 +20,7 @@ function handlerSearch(evt) {
       }
 
       renderImages(resp);
+      loadMoreBtn.classList.remove('js-hidden');
     })
     .catch(error => console.log(error));
 }
