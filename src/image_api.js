@@ -5,6 +5,7 @@ function fetchImage(keyWords) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: 'true',
+    per_page: 40,
   });
   //   console.log(searchParams.toString());
   return fetch(`https://pixabay.com/api/?${searchParams}`).then(resp => {
