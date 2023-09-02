@@ -4,28 +4,39 @@ import Notiflix from 'notiflix';
 const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
-
+let page = 1;
+form.addEventListener('submit', () => (page = 1));
+form.addEventListener('submit', () => (gallery.innerHTML = ''));
 form.addEventListener('submit', handlerSearch);
+
 function handlerSearch(evt) {
   evt.preventDefault();
   const search = form.elements.searchQuery.value;
   console.log(search);
-  fetchImage(search)
+  loadMoreBtn.classList.add('js-hidden');
+  fetchImage(search, page)
     .then(resp => {
       if (resp.hits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-        // console.log(resp);
       }
-
+      console.log(resp.totalHits);
       renderImages(resp);
       loadMoreBtn.classList.remove('js-hidden');
+
+      if (page * 40 > resp.totalHits) {
+        loadMoreBtn.classList.add('js-hidden');
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+      page += 1;
     })
     .catch(error => console.log(error));
 }
 function renderImages(arr) {
-  console.log(arr.hits);
+  // console.log(arr.hits);
   const markup = arr.hits
     .map(
       ({
@@ -58,6 +69,7 @@ function renderImages(arr) {
       }
     )
     .join('');
-  // gallery.insertAdjacentHTML('beforeend', markup);
-  gallery.innerHTML = markup;
+  gallery.insertAdjacentHTML('beforeend', markup);
+  // gallery.innerHTML = markup;
 }
+loadMoreBtn.addEventListener('click', handlerSearch);
