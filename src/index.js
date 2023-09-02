@@ -1,5 +1,9 @@
 import { fetchImage } from './image_api';
 import Notiflix from 'notiflix';
+// Описаний в документації
+import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
@@ -71,5 +75,7 @@ function renderImages(arr) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
   // gallery.innerHTML = markup;
+  lightbox.refresh();
 }
 loadMoreBtn.addEventListener('click', handlerSearch);
+let lightbox = new SimpleLightbox('.gallery a', {});
