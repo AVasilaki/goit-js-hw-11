@@ -19,7 +19,7 @@ import axios from 'axios';
 //     return resp.json();
 //   });
 // }
-async function fetchImage(keyWords, page) {
+async function fetchImage(keyWords, page, perPage) {
   try {
     const resp = await axios.get(`https://pixabay.com/api/`, {
       params: {
@@ -28,7 +28,7 @@ async function fetchImage(keyWords, page) {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: 'true',
-        per_page: 40,
+        per_page: perPage,
         page: page,
       },
     });
@@ -36,6 +36,7 @@ async function fetchImage(keyWords, page) {
     return resp;
   } catch (error) {
     console.error(error);
+    return error;
   }
 }
 
