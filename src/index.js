@@ -20,7 +20,7 @@ function handlerSearch(evt) {
   loadMoreBtn.classList.add('js-hidden');
   fetchImage(search, page)
     .then(resp => {
-      if (resp.hits.length === 0) {
+      if (resp.data.hits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
@@ -41,7 +41,7 @@ function handlerSearch(evt) {
 }
 function renderImages(arr) {
   // console.log(arr.hits);
-  const markup = arr.hits
+  const markup = arr.data.hits
     .map(
       ({
         webformatURL,
@@ -57,16 +57,20 @@ function renderImages(arr) {
   
   <div class="info">
     <p class="info-item">
-      <b>Likes ${likes}</b>
+      <b>Likes</b><br>
+      ${likes}
     </p>
     <p class="info-item">
-      <b>Views ${views}</b>
+      <b>Views </b><br>
+      ${views}
     </p>
     <p class="info-item">
-      <b>Comments ${comments}</b>
+      <b>Comments </b><br>
+      ${comments}
     </p>
     <p class="info-item">
-      <b>Downloads ${downloads}</b>
+      <b>Downloads </b><br>
+      ${downloads}
     </p>
   </div>
 </div>`;
