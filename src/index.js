@@ -23,7 +23,8 @@ function handlerSearch(evt) {
     .then(resp => {
       if (resp.data.hits.length === 0) {
         Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
+          'Sorry, there are no images matching your search query. Please try again.',
+          { timeout: 5000 }
         );
       }
       console.log(resp.data.totalHits);
@@ -33,19 +34,20 @@ function handlerSearch(evt) {
       if (page * perPage > resp.data.totalHits) {
         loadMoreBtn.classList.add('js-hidden');
         Notiflix.Notify.info(
-          "We're sorry, but you've reached the end of search results."
+          "We're sorry, but you've reached the end of search results.",
+          { timeout: 5000 }
         );
       }
       page += 1;
     })
     .catch(error =>
       Notiflix.Notify.failure(
-        'Sorry, something went wrong!Try reloading the page'
+        'Sorry, something went wrong!Try reloading the page',
+        { timeout: 5000 }
       )
     );
 }
 function renderImages(arr) {
-  // console.log(arr.hits);
   const markup = arr.data.hits
     .map(
       ({
