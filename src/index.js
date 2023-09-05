@@ -24,20 +24,39 @@ function handlerSearch(evt) {
       if (resp.data.hits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.',
-          { timeout: 5000 }
+          { timeout: 5000, fontSize: '24px' }
         );
       }
       console.log(resp.data.totalHits);
       renderImages(resp);
       loadMoreBtn.classList.remove('js-hidden');
-
       if (page * perPage > resp.data.totalHits) {
         loadMoreBtn.classList.add('js-hidden');
-        Notiflix.Notify.info(
-          "We're sorry, but you've reached the end of search results.",
-          { timeout: 5000 }
+      }
+      if (resp.data.hits.length !== 0 && page === 1) {
+        Notiflix.Notify.success(
+          `Hooray! We found ${resp.data.totalHits} totalHits images.`,
+          {
+            timeout: 5000,
+            fontSize: '24px',
+            cssAnimationStyle: 'from-top',
+            // position: 'right-top',
+          }
         );
       }
+      if (page * perPage > resp.data.totalHits && resp.data.hits.length !== 0) {
+        // loadMoreBtn.classList.add('js-hidden');
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results.",
+          {
+            position: 'center-bottom',
+            timeout: 5000,
+            fontSize: '24px',
+            cssAnimationStyle: 'zoom',
+          }
+        );
+      }
+
       page += 1;
     })
     .catch(error =>
